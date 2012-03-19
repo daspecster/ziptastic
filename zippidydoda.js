@@ -9,35 +9,48 @@
       'countryid' : 'country'
     }, options);	
 
-    return this.each(function() {        
-    	var zip_element = this.children("#" + settings.zipid);
-		var city_element = this.children("#" + settings.cityid);
-		var state_element = this.children("#" + settings.stateid);
-		var country_element = this.children("#" + settings.countryid);
+	var zip_element = $("#" + settings.zipid);
 
-		// Hide the elements that we're going to retreive data for.
-		city_element.hide();
-		state_element.hide();
-		country_element.hide();
+	var city_element = $("#" + settings.cityid);
+	var state_element = $("#" + settings.stateid);
+	var country_element = $("#" + settings.countryid);
 
-		//TODO: Capture the onchange event of the zip field...
+	// Hide the elements that we're going to retreive data for.
+	city_element.parent().hide();
+	
+	state_element.parent().hide();
+	
+	country_element.parent().hide();
+	
 
-	    var client = new XMLHttpRequest();
-		client.open("GET", "http://localhost?zip=48867", true);
+    $('#zip').change(function() {
+		var client = new XMLHttpRequest();
+		client.open("GET", "http://localhost?zip=" + this.value, true);
 		client.onreadystatechange = function() {
 			if(client.readyState == 4) {
-				alert(client.responseText);
-				var location_data = this.parseJSON(client.responseText);
+				//alert(client.responseText);
+				var location_data = JSON.parse(client.responseText);
 
-				city_element.val(location_data[0]);
-				state_element.val(location_data[1]);
-				country_element.val(location_data[2]);
+				city_element.val(location_data.city);
+				city_element.parent().show();
+				state_element.val(location_data.state);
+				state_element.parent().show();
+				country_element.val(location_data.country);
+				country_element.parent().show();
 		  	};
 		};
 		  
 		client.send();
 
-    });
+
+    });	
+
+	/*
+
+
+		*/
+
+
 
   };
 })( jQuery );
