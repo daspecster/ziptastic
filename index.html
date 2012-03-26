@@ -1,88 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Ziptastic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>daspecster/zipcode-api @ GitHub</title>
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #0055a3;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #ffaa5c; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #ffaa5c; }
-    h3 { text-align: center; color: #ffaa5c; }
-    a { color: #ffaa5c; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
 
-<body>
-  <a href="https://github.com/daspecster/zipcode-api"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  </head>
 
-  <div id="container">
+  <body>
 
-    <div class="download">
-      <a href="https://github.com/daspecster/zipcode-api/zipball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-      <a href="https://github.com/daspecster/zipcode-api/tarball/master">
-        <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Ziptastic!</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
     </div>
 
-    <h1><a href="https://github.com/daspecster/zipcode-api">zipcode-api</a>
-      <span class="small">by <a href="https://github.com/daspecster">daspecster</a></span></h1>
+    <div class="container">
 
-    <div class="description">
-      This is a Python API for getting zipcodes
-    </div>
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Ziptastic!</h1>
+        <p>Ziptastic is a simple API that allows people to ask which Country,State and City are associated with a Zip Code.</p>
+		<p>The purpose for this service is to STOP the madness of having to fill those information out on webforms. If you've ever filled out a webform, then
+		you have probably gotten to the address section and simply entered in your street information and then your city, state, country and then your zip code.
+		This has always bothered me because the 3 fields prior to the zip code can be determined from the zip code!</p>
+        <p><a class="btn btn-primary btn-large" href="demo.html">Use it now &raquo;</a></p>
+		
+		<p><a class="btn btn-success btn-primary btn-large" href="http://threecents.elevenbasetwo.com/support-us">Help us pay for bandwidth and maintenance!</a></p>
+		
+      </div>
 
-    
+      <hr>
 
-    
+      <footer>
+        <p>&copy; ElevenBaseTwo 2012</p>
+      </footer>
 
-    
+    </div> <!-- /container -->
 
-    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="bootstrap/js/jquery.js"></script>
+    <script src="bootstrap/js/bootstrap-transition.js"></script>
+    <script src="bootstrap/js/bootstrap-alert.js"></script>
+    <script src="bootstrap/js/bootstrap-modal.js"></script>
+    <script src="bootstrap/js/bootstrap-dropdown.js"></script>
+    <script src="bootstrap/js/bootstrap-scrollspy.js"></script>
+    <script src="bootstrap/js/bootstrap-tab.js"></script>
+    <script src="bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="bootstrap/js/bootstrap-popover.js"></script>
+    <script src="bootstrap/js/bootstrap-button.js"></script>
+    <script src="bootstrap/js/bootstrap-collapse.js"></script>
+    <script src="bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="bootstrap/js/bootstrap-typeahead.js"></script>
 
-    
-      <h2>Authors</h2>
-      <p>Thomas Schultz (daspecster@gmail.com)<br/>Eric Shull (eric.shull@gmail.com)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>Thomas Schultz (daspecster@gmail.com)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/daspecster/zipcode-api/zipball/master">zip</a> or
-      <a href="https://github.com/daspecster/zipcode-api/tarball/master">tar formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/daspecster/zipcode-api</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/daspecster/zipcode-api">daspecster/zipcode-api</a>
-    </div>
-
-  </div>
-
-</body>
+  </body>
 </html>
