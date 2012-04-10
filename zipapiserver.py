@@ -11,7 +11,7 @@ PORT_NUMBER = 80 # Maybe set this to 9000.
 class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
         s.send_response(200)
-        s.send_header("Content-type", "text/json")
+        s.send_header("Content-type", "application/json")
         # The Magic!
         s.send_header("Access-Control-Allow-Origin", "*")
         s.end_headers()
