@@ -10,9 +10,6 @@ PORT_NUMBER = 80 # Maybe set this to 9000.
 
 class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
-        # The Magic!
-        s.send_header("Access-Control-Allow-Origin", "*")
-        
         # Get the zip from the data
         qs = {}
         path = s.path
@@ -34,13 +31,17 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             row = c.fetchone()
             if row is not None:
                 s.send_response(200)
+                # The Magic!
+                s.send_header("Access-Control-Allow-Origin", "*")
                 s.send_header("Content-type", "application/json")
                 s.end_headers()
         
                 data = dict(zip(('country', 'state', 'city'), row))
                 s.wfile.write(json.dumps(data))
             else:
+                # The Magic!
                 s.send_response(404)
+                s.send_header("Access-Control-Allow-Origin", "*")
                 s.send_header("Content-type", "text/plain")
                 s.end_headers()
                 s.wfile.write("404 - Not Found")
