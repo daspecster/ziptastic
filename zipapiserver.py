@@ -16,11 +16,15 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         # Get the zip from the data
         qs = {}
         path = s.path
+        the_zip = None
         if '?' in path:
             path, tmp = path.split('?', 1)
             qs = urlparse.parse_qs(tmp)
             the_zip = qs['zip']
+        elif path:
+            the_zip = [path.strip('/')]
 
+        if the_zip:
             # Query database with the ZIP and pull the city, state, country
             conn = sqlite3.connect('zipcodes.db')
             c = conn.cursor()
