@@ -47,6 +47,12 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.end_headers()
                 s.wfile.write("404 - Not Found")
 
+    def do_OPTIONS(s):
+        s.send_response(200)
+        s.send_header("Access-Control-Allow-Origin", "*")
+        s.send_header("Access-Control-Allow-Headers", "X-Requested-With,X-Prototype-Version")
+        s.end_headers()
+
 
 if __name__ == '__main__':
     server_class = BaseHTTPServer.HTTPServer
