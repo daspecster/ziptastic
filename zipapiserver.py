@@ -17,10 +17,11 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if '?' in path:
             path, tmp = path.split('?', 1)
             qs = urlparse.parse_qs(tmp)
-            the_zip = qs['zip']
+            the_zip = qs['zip'][0]
         elif path:
-            the_zip = [path.strip('/').split('-')[0]]
+            the_zip = path.strip('/')
 
+        the_zip = [the_zip.split('-')[0]]
 
         if the_zip:
             # Query database with the ZIP and pull the city, state, country
