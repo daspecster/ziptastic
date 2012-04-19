@@ -1,0 +1,7 @@
+This is a re-implementation of the zipapiserver backed by Redis and using WSGI.
+
+It uses a hash for each zipcode.
+
+Benchmarking was done on my laptop, small sample, etc. See ab.md for those.
+
+dump.rdb is a clean Redis database with all the keys from the sqlite db loaded in.
