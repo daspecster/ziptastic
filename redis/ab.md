@@ -6,7 +6,7 @@ Totally un-scientific tests!
 
 ## AB
 
-	$ ab -n 10000 -c 1000 'http://localhost:8080/?zipcode=68102'
+	$ ab -n 1000 -c 100 'http://localhost:8080/?zipcode=68102'
 
 ## Results
 
@@ -60,7 +60,7 @@ Totally un-scientific tests!
 
 ## AB
 
-	$ ab -n 10000 -c 1000 'http://localhost:8080/?zip=68102'
+	$ ab -n 1000 -c 100 'http://localhost:8080/?zip=68102'
 
 ## Results
 
