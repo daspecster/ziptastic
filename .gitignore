@@ -1,0 +1,3 @@
+*.pyc
+redis.conf
+redis-server.log
