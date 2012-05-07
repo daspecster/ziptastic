@@ -27,6 +27,14 @@
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    
+    <script>
+	  var btns = document.getElementsByTagName("button");
+	  for(var i = 0; i < btns.length; i++) {
+	    btns[i].className += " btn";
+	  }
+   </script>
+    
   </head>
 
   <body>
@@ -51,7 +59,7 @@
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div class="hero-unit">
+      <div class="well">
         <h1>Ziptastic!</h1>
         <p>Ziptastic is a simple API that allows people to ask which Country,State and City are associated with a Zip Code.</p>
 	<p>The purpose for this service is to <strong>STOP</strong> the madness of having to fill those information out on webforms. If you've ever filled out a webform, then
@@ -62,6 +70,11 @@
 		<p><a class="btn btn-success btn-primary btn-large" href="https://elevenbasetwo.com/donations/">Help us pay for bandwidth and maintenance!</a></p>
 		
       </div>
+
+      <div >
+          <script src="http://3ccdn.com/tc.js" data-key="95d3686ee9ce4ffa6803322f3d5933c9"></script>
+      </div>
+
 
       <hr>
 
