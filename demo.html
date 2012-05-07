@@ -118,7 +118,13 @@
     <script src="bootstrap/js/bootstrap-collapse.js"></script>
     <script src="bootstrap/js/bootstrap-carousel.js"></script>
     <script src="bootstrap/js/bootstrap-typeahead.js"></script>
-	<script type="text/javascript" src="google-code-prettify/prettify.js"></script>
+    <script type="text/javascript" src="google-code-prettify/prettify.js"></script>
+    <script>
+        var btns = document.getElementsByTagName("button");
+        for(var i = 0; i < btns.length; i++) {
+            btns[i].className += " btn";
+        }
+   </script>
 
   </body>
 </html>
