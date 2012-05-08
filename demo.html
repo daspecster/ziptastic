@@ -59,7 +59,7 @@
 		<pre class="prettyprint">
 &lt;script type="text/javascript"&gt;
 	var client = new XMLHttpRequest();
-	client.open("GET", "http://zip.elevenbasetwo.com?zip=48867", true);
+	client.open("GET", "http://zip.elevenbasetwo.com/v2/US/48867", true);
 	client.onreadystatechange = function() {
 	  if(client.readyState == 4) {
 		alert(client.responseText);
@@ -70,7 +70,7 @@
 &lt;/script&gt;</pre>
 
 		<h2>Result:</h2>
-		<pre class="prettyprint">{"country": "US", "state": "MI", "city": "OWOSSO"}</pre>
+		<pre class="prettyprint">{"country": "US", "state": "Michigan", "city": "Owosso"}</pre>
         
 
     <h2>BETA Jquery Plugin!</h2>
@@ -82,6 +82,37 @@
     <p><a href="https://github.com/walterdavis/ziptastic-prototype">Github</a></p>
 		
       </div>
+     <hr>
+     <h2>Important</h2>
+	<p>We recommend using GeoIP to determin the country code of your visitor as a suggestion when they are filling out your form.
+	(<a href="http://www.pointlessrants.com/2010/05/python-geoip-python-geoip-cities-tutorial">http://www.pointlessrants.com/2010/05/python-geoip-python-geoip-cities-tutorial</a>)</p>
+
+      <h2>Notes</h2>
+	<p>
+	We are now using the geonames.org database for postal codes. There are many more countries we support.
+	</p>
+	<p>
+	Available country codes:
+	AD,AR,AS,AT,AU,BD,BE,BG,BR,CA,CH,CZ,DE,DK,DO,ES,FI,FO,FR,GB,GF,GG,GL,GP,GT,GU,GY,HR,HU,IM,IN,IS,IT,JE,JP,LI,LK,LT,LU,MC,MD,MH,MK,MP,MQ,MX,MY,NL,NO,NZ,PH,PK,PL,PM,PR,PT,RE,RU,SE,SI,SJ,SK,SM,TH,TR,US,VA,VI,YT,ZA
+	</p>
+
+<h2>Usage</h2>
+	<h3>v2</h3>
+	This is the new updated version and requires that you pass in the country code as well.
+
+	Example:
+	http://zip.elevenbasetwo.com/v2/US/48867
+
+	<h3>v1</h3>
+	<p>
+	This version only supports US postal codes and can be accessed like this...
+	</p>
+	<pre>
+	Example:
+	http://zip.elevenbasetwo.com/48867
+	and
+	http://zip.elevenbasetwo.com/?zip=48867
+	</pre>
 
       <hr>
 
