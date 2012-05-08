@@ -24,7 +24,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if '?' in path:
             path, tmp = path.split('?', 1)
             qs = urlparse.parse_qs(tmp)
-            the_zip = qs['zip'][0]
+            the_zip = qs.get('zip', [''])[0]
         elif path:
             the_zip = path.strip('/')
         
