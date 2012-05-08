@@ -89,24 +89,20 @@
 
       <h2>Notes</h2>
 	<p>
-	We are now using the geonames.org database for postal codes. There are many more countries we support.
-	</p>
-	<p>
-	Available country codes:
-	AD,AR,AS,AT,AU,BD,BE,BG,BR,CA,CH,CZ,DE,DK,DO,ES,FI,FO,FR,GB,GF,GG,GL,GP,GT,GU,GY,HR,HU,IM,IN,IS,IT,JE,JP,LI,LK,LT,LU,MC,MD,MH,MK,MP,MQ,MX,MY,NL,NO,NZ,PH,PK,PL,PM,PR,PT,RE,RU,SE,SI,SJ,SK,SM,TH,TR,US,VA,VI,YT,ZA
+	Ziptastic now uses a postal code database from the good folks at geonames.org. Thanks to their awesome work, we now support waay more countries<p>
+    <p>Available country codes:
+	AD, AR, AS, AT, AU, BD, BE, BG, BR, CA, CH, CZ, DE, DK, DO, ES, FI, FO, FR, GB, GF, GG, GL, GP, GT, GU, GY, HR, HU, IM, IN, IS, IT, JE, JP, LI, LK, LT, LU, MC, MD, MH, MK, MP, MQ, MX, MY, NL, NO, NZ, PH, PK, PL, PM, PR, PT, RE, RU, SE, SI, SJ, SK, SM, TH, TR, US, VA, VI, YT, ZA
 	</p>
 
 <h2>Usage</h2>
-	<h3>v2</h3>
-	This is the new updated version and requires that you pass in the country code as well.
+	<h3>New and so much better</h3>
+    <p>Ziptastic supports a smattering of countries via their two-letter country code. Querying the new API looks like this:</p>
 
 	Example:
 	http://zip.elevenbasetwo.com/v2/US/48867
 
-	<h3>v1</h3>
-	<p>
-	This version only supports US postal codes and can be accessed like this...
-	</p>
+	<h3>The original</h3>
+    <p>If you only deal with the US, you can still query the original Ziptastic API</p>
 	<pre>
 	Example:
 	http://zip.elevenbasetwo.com/48867
