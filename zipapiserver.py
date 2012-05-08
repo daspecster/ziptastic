@@ -3,10 +3,14 @@ import BaseHTTPServer
 import urlparse
 import json
 import sqlite3
-
+import os
 
 HOST_NAME = 'localhost'
-PORT_NUMBER = 80
+
+if 'ZIPTASTIC_PORT' in os.environ:
+    PORT_NUMBER = int(os.environ['ZIPTASTIC_PORT'])
+else:
+    PORT_NUMBER = 80
 
 class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
