@@ -45,7 +45,13 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             # Query database with the ZIP and pull the city, state, country
             conn = sqlite3.connect(database_name)
             c = conn.cursor()
-            c.execute("SELECT Country, State, City from zipcodes WHERE zipcode LIKE ?", the_zip)
+            
+            if the_country is not None:
+                print the_country
+                print the_zip
+                c.execute("SELECT Country, State, City from zipcodes WHERE zipcode LIKE ? AND country LIKE ?", (the_zip[0], the_country))
+            else:
+                c.execute("SELECT Country, State, City from zipcodes WHERE zipcode LIKE ?", the_zip)
 
             row = c.fetchone()
 
