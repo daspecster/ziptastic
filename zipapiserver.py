@@ -2,7 +2,7 @@ import time
 import BaseHTTPServer
 import urlparse
 import json
-import sqlite3
+import redis
 import os
 
 HOST_NAME = 'localhost'
@@ -19,10 +19,10 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         path = s.path
         the_zip = None
         the_country = None
-        database_name = "zipcodes-old.db"
+        old_db = True
 
         if path.startswith("/v2"):
-            database_name = "zipcodes.db"
+            old_db = False
             path = path[3:]
 
         if '?' in path:
@@ -31,7 +31,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             the_zip = qs.get('zip', [''])[0]
         elif path:
             the_zip = path.strip('/')
-        
+
         p = path.lstrip("/")
         p = p.split("/", 2)
 
@@ -39,31 +39,26 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             the_zip = p[1]
             the_country = p[0]
 
-        the_zip = [the_zip.split('-')[0]]
+        if the_country is None:
+            the_country = 'US'
+
+        the_zip = [the_zip.split('-')[0]][0]
 
         if the_zip:
             # Query database with the ZIP and pull the city, state, country
-            conn = sqlite3.connect(database_name)
-            c = conn.cursor()
-            
-            if the_country is not None:
-                print the_country
-                print the_zip
-                c.execute("SELECT Country, State, City from zipcodes WHERE zipcode LIKE ? AND country LIKE ?", (the_zip[0], the_country))
+            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+            if old_db:
+                location = r.hgetall(the_zip)
             else:
-                c.execute("SELECT Country, State, City from zipcodes WHERE zipcode LIKE ?", the_zip)
+                location = r.hgetall("{0}:{1}".format(the_country, the_zip))
 
-            row = c.fetchone()
-
-            if row is not None:
+            if len(location) > 0:
                 s.send_response(200)
                 s.send_header("Access-Control-Allow-Origin", "*")
                 s.send_header("Content-type", "application/json")
                 s.end_headers()
-
-                data = {'country': str(row[0]),'state': str(row[1]), 'city': str(row[2])}
-
-                s.wfile.write(json.dumps(data))
+                s.wfile.write(json.dumps(location))
             else:
                 s.send_response(404)
                 s.send_header("Access-Control-Allow-Origin", "*")
