@@ -16,6 +16,14 @@
         padding-bottom: 40px;
       }
       
+      .brand { 
+        background-image: url(ziptastic.png);
+        background-repeat: no-repeat;
+        background-position: center center;
+        width: 120px;
+        height: 20px;
+      }
+
     </style>
     <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -41,9 +49,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="index.html">Ziptastic!</a>
+          <a class="brand" href="index.html"></a>
           <div class="nav-collapse">
             <ul class="nav">
+              <li><a href="demo.html">Demo</a></li>
+              <!--<li><a href="code.html">More Code!</a></li>-->
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -53,65 +63,128 @@
     <div class="container">
 
       <!-- Main hero unit for a primary marketing message or call to action -->
-      <div>
-        <h1>How to use it!</h1>
-		<p>A simple example of retrieving the Country, State, City in JSON format</p>
-		<pre class="prettyprint">
+      <div class="row"> 
+        <div class="span6">
+          <h1>How to use it!</h1>
+  		    <p>A simple example of retrieving the Country, State, City.</p>
+          <p><strong>Enter your postal code!</strong></p>
+  		
+          <form id="theform">
+              <label for="zip">
+                Postal Code:
+                <input type="text" id="zip" />
+              </label>
+              <label for="city">
+                  City:
+                  <input type="text" id="city" />
+              </label>
+
+              <label for="state">
+                  State:
+                  <input type="text" id="state" />
+              </label>
+
+              <label for="country">
+                  Country:
+                  <input type="text" id="country" />
+              </label>
+              <input type="submit" disabled="disabled" />
+          </form>
+          <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+          <script type="text/javascript" src="jquery.ziptastic.js"></script>
+          <script type="text/javascript">
+              (function($) {
+                  $(function() {
+                      var duration = 500;
+
+                      var elements = {
+                          country: $('#country'),
+                          state: $('#state'),
+                          city: $('#city'),
+                          zip: $('#zip')
+                      }
+
+                      // Initially hide the city/state/zip
+                      elements.country.parent().hide();
+                      elements.state.parent().hide();
+                      elements.city.parent().hide();
+
+                      // Initialize the ziptastic and bind to the change of zip code
+                      elements.zip.ziptastic()
+                          .on('zipChange', function(evt, country, state, city, zip) {
+                              elements.country.val(country).parent().show(duration);
+                              elements.state.val(state).parent().show(duration);
+                              elements.city.val(city).parent().show(duration);
+                          });
+                  });
+              }(jQuery));
+          </script>
+      
+        </div>
+        <div class="span6">
+          <h2>JavaScript</h2>
+          <pre class="">
 &lt;script type="text/javascript"&gt;
-	var client = new XMLHttpRequest();
-	client.open("GET", "http://zip.elevenbasetwo.com/v2/US/48867", true);
-	client.onreadystatechange = function() {
-	  if(client.readyState == 4) {
-		alert(client.responseText);
-	  };
-	};
-	  
-	client.send();
-&lt;/script&gt;</pre>
-
-		<h2>Result:</h2>
-		<pre class="prettyprint">{"country": "US", "state": "Michigan", "city": "Owosso"}</pre>
-        
-
-    <h2>BETA Jquery Plugin!</h2>
-    <p>This plugin is extremely beta and can be modified to fit your needs</p>
-    <p><a href="https://github.com/daspecster/ziptastic-jquery-plugin">Github</a></p>
+  var client = new XMLHttpRequest();
+  client.open("GET", "http://zip.elevenbasetwo.com/v2/US/48867", true);
+  client.onreadystatechange = function() {
+    if(client.readyState == 4) {
+    alert(client.responseText);
+    };
+  };
     
-    <h2>Prototype Plugin!</h2>
-    <p>This plugin was developed by <a href="https://github.com/walterdavis">Walter Davis</a></p>
-    <p><a href="https://github.com/walterdavis/ziptastic-prototype">Github</a></p>
-		
+  client.send();
+&lt;/script&gt;
+          </pre>
+
+          <h2>Result:</h2>
+          <pre class="">{"country": "US", "state": "Michigan", "city": "Owosso"}</pre>
+        </div>
       </div>
-     <hr>
-     <h2>Important</h2>
-	<p>We recommend using GeoIP to determin the country code of your visitor as a suggestion when they are filling out your form.
-	(<a href="http://www.pointlessrants.com/2010/05/python-geoip-python-geoip-cities-tutorial">http://www.pointlessrants.com/2010/05/python-geoip-python-geoip-cities-tutorial</a>)</p>
 
-      <h2>Notes</h2>
-	<p>
-	Ziptastic now uses a postal code database from the good folks at geonames.org. Thanks to their awesome work, we now support waay more countries<p>
-    <p>Available country codes:
-	AD, AR, AS, AT, AU, BD, BE, BG, BR, CA, CH, CZ, DE, DK, DO, ES, FI, FO, FR, GB, GF, GG, GL, GP, GT, GU, GY, HR, HU, IM, IN, IS, IT, JE, JP, LI, LK, LT, LU, MC, MD, MH, MK, MP, MQ, MX, MY, NL, NO, NZ, PH, PK, PL, PM, PR, PT, RE, RU, SE, SI, SJ, SK, SM, TH, TR, US, VA, VI, YT, ZA
-	</p>
+      <div class="row">
+        <div class="span6">
+        <h2>The API</h2>
+      	<h3>New and so much better</h3>
+          <p>Ziptastic supports a smattering of countries via their two-letter country code. Querying the new API looks like this:</p>
 
-<h2>Usage</h2>
-	<h3>New and so much better</h3>
-    <p>Ziptastic supports a smattering of countries via their two-letter country code. Querying the new API looks like this:</p>
 
-    <pre>
-	Example:
-	http://zip.elevenbasetwo.com/v2/US/48867
-    </pre>
+        <pre>
+Example:
+http://zip.elevenbasetwo.com/v2/US/48867
+</pre>
 
-	<h3>The original</h3>
-    <p>If you only deal with the US, you can still query the original Ziptastic API</p>
-	<pre>
-	Example:
-	http://zip.elevenbasetwo.com/48867
-	and
-	http://zip.elevenbasetwo.com/?zip=48867
-	</pre>
+     	  <h3>The original</h3>
+        <p>If you only deal with the US, you can still query the original Ziptastic API</p>
+        <pre>
+Example:
+http://zip.elevenbasetwo.com/48867
+and
+http://zip.elevenbasetwo.com/?zip=48867
+</pre>
+        </div>
+        <div class="span6">
+          <h2>Plugins and more free stuff!</h2>
+          <ul>
+            <li>
+                Jquery Plugin - <a href="https://github.com/daspecster/ziptastic-jquery-plugin">Github</a>
+            </li>
+            <li>
+              Prototype Plugin - <a href="https://github.com/walterdavis/ziptastic-prototype">Github</a>
+            </li>
+            <li>
+              RubyGem - <a href="http://rubygems.org/gems/ziptastic">http://rubygems.org/gems/ziptastic</a>
+            </li>
+            <li>
+              Drupal Module - <a href="http://drupal.org/sandbox/theunraveler/1589028">http://drupal.org/sandbox/theunraveler/1589028</a>
+            </li>
+            <li>
+              Ziptastic DLL - <a href="http://cl.ly/0Y1t1c41370q2D0N2C3O">http://cl.ly/0Y1t1c41370q2D0N2C3O</a>
+            </li>
 
+          </ul>
+        </div>
+      </div>
       <hr>
 
       <footer>
