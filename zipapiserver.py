@@ -6,11 +6,7 @@ import redis
 import os
 
 HOST_NAME = 'localhost'
-
-if 'ZIPTASTIC_PORT' in os.environ:
-    PORT_NUMBER = int(os.environ['ZIPTASTIC_PORT'])
-else:
-    PORT_NUMBER = 80
+PORT_NUMBER = int(os.environ.get('ZIPTASTIC_PORT', 80))
 
 class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
