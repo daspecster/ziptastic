@@ -64,6 +64,12 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_header("Content-type", "text/plain")
                 s.end_headers()
                 s.wfile.write("{}")
+        else:
+            s.send_response(400)
+            s.send_header("Access-Control-Allow-Origin", "*")
+            s.send_header("Content-type", "application/json")
+            s.end_headers()
+            s.wfile.write("{}")
 
     def do_OPTIONS(s):
         s.send_response(200)
