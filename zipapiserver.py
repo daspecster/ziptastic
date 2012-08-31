@@ -41,7 +41,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         if the_country == 'CA':
             the_zip = the_zip[:3].upper()
 
-        the_zip = [the_zip.split('-')[0]][0]
+        the_zip = the_zip.split('-')[0]
 
         if the_zip:
             # Query database with the ZIP and pull the city, state, country
