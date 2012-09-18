@@ -7,7 +7,7 @@
 	$.ziptastic = function(zip, callback){
 		// Only make unique requests
 		if(!requests[zip]) {
-			requests[zip] = $.getJSON('http://zip.elevenbasetwo.com/vs/US/' + zip);
+			requests[zip] = $.getJSON('http://zip.elevenbasetwo.com/v2/US/' + zip);
 		}
 
 		// Bind to the finished request
