@@ -56,18 +56,21 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_response(200)
                 s.send_header("Access-Control-Allow-Origin", "*")
                 s.send_header("Content-type", "application/json")
+                s.send_header("charset", "utf-8")
                 s.end_headers()
                 s.wfile.write(json.dumps(location))
             else:
                 s.send_response(404)
                 s.send_header("Access-Control-Allow-Origin", "*")
                 s.send_header("Content-type", "text/plain")
+                s.send_header("charset", "utf-8")
                 s.end_headers()
                 s.wfile.write("{}")
         else:
             s.send_response(400)
             s.send_header("Access-Control-Allow-Origin", "*")
             s.send_header("Content-type", "application/json")
+            s.send_header("charset", "utf-8")
             s.end_headers()
             s.wfile.write("{}")
 
@@ -75,6 +78,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header("Access-Control-Allow-Origin", "*")
         s.send_header("Access-Control-Allow-Headers", "X-Requested-With,X-Prototype-Version")
+        s.send_header("charset", "utf-8")
         s.end_headers()
 
 
