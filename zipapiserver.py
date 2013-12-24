@@ -81,7 +81,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 def start_server():
     server_class = BaseHTTPServer.HTTPServer
     httpd = server_class((HOST_NAME, PORT_NUMBER), ZipAPIServerHandler)
-    #print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
+    print time.asctime(), "Server Starts - %s:%s" % (HOST_NAME, PORT_NUMBER)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
