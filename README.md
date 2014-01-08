@@ -3,8 +3,8 @@ Ziptastic
 
 Important
 ---------
-We recommend using GeoIP to determin the country code of your visitor as a suggestion when they are filling out your form.
-(http://pointlessrants.com/post/python-geoip-python-geoip-cities-tutorial-)
+We recommend using GeoIP to determine the country code of your visitor as a suggestion when they are filling out your form.
+(http://pointlessrants.com/posts/python-geoip-python-geoip-cities-tutorial/)
 
 Notes
 -----
