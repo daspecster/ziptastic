@@ -1,10 +1,14 @@
 import redis
 import csv
-
+import sys
 
 
 class ZipAPIImport():
     def build_database(self, filename):
+
+        # For large CSV files, increase the size
+        csv.field_size_limit(sys.maxsize)
+
         # connect to db
         r = redis.StrictRedis(host='localhost', port=6379, db=0)
 
@@ -18,6 +22,12 @@ class ZipAPIImport():
                 state_short = row[4]
                 county = row[5]
 
+                tz = 'n/a'
+
+                if len(row) >= 17:
+                    tz = row[17]
+                    # print county, postal_code, city, state, state_short, country, tz
+
                 r.hmset(
                     country + ":" + postal_code,
                     {
@@ -26,7 +36,8 @@ class ZipAPIImport():
                         'city': city,
                         'state': state,
                         'state_short': state_short,
-                        'county': county
+                        'county': county,
+                        'timezone': tz
                         }
                     )
 
