@@ -94,6 +94,14 @@ mixpanel.init("260efdc73003178a9c05ffb14f426483");</script><!-- end Mixpanel -->
       </div>
 
       <div class="row well">
+      	<script>
+      		if (location.href.slice(-8) == 'thankyou') {
+      			$('#subscribed').show();
+      		} else {
+      			$('#subscribed').hide();
+      		}
+      	</script> 
+      	<div id="subscribed" class="alert alert-success">Thanks for subscribing!</div>
 	<!-- Begin MailChimp Signup Form -->
 	<link href="//cdn-images.mailchimp.com/embedcode/slim-081711.css" rel="stylesheet" type="text/css">
 	<style type="text/css">
