@@ -1,4 +1,4 @@
-import redis
+from pymongo import MongoClient
 import csv
 import sys
 import json
@@ -10,7 +10,10 @@ class ZipAPIImport():
         csv.field_size_limit(sys.maxsize)
 
         # connect to db
-        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+        mc = MongoClient()
+        db = mc.ziptastic
+        ziptastic_collection = db.ziptastic_codes
+
 
         with open(filename, 'rb') as txtdb:
             parseddb = csv.reader(txtdb, delimiter='\t')
@@ -28,23 +31,17 @@ class ZipAPIImport():
                     tz = row[17]
                     # print county, postal_code, city, state, state_short, country, tz
 
-                # Turn object into json string
                 data = {
-                    'country': country,
-                    'postal_code': postal_code,
-                    'city': city,
-                    'state': state,
-                    'state_short': state_short,
-                    'county': county,
-                    'timezone': tz
+                        'country': country,
+                        'postal_code': postal_code,
+                        'city': city,
+                        'state': state,
+                        'state_short': state_short,
+                        'county': county,
+                        'timezone': tz
                     }
 
-                data_str = json.dumps(data)
-                 
-                r.rpush(
-                    country + ":" + postal_code,
-                    data_str
-                )
+                ziptastic_collection.insert(data)
 
         #location = r.hgetall("{0}:{1}".format(the_country, the_zip))
 

@@ -34,21 +34,14 @@ class GeonamesToRedisImport():
         # r = redis.StrictRedis(host='localhost', port=6379, db=0)
         rgeohash = redis.Redis(host='localhost', port=6379, db=1)
 
-        counter = 0
         with open(filename, 'rb') as txtdb:
             parseddb = csv.reader(txtdb, delimiter='\t')
             for row in parseddb:
-                
-                if counter % 1000 == 0:
-                    print counter
-                
                 geonameid = row[0]
                 latitude = row[4]
                 longitude = row[5]
                 admin1_code_fips = row[10]
                 timezone = row[17]
-
-                counter = counter + 1
                 
                 # r.hmset(
                 #     geonameid,
