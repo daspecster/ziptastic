@@ -5,6 +5,8 @@ import json
 import redis
 import os
 
+from mixpanel import Mixpanel
+
 HOST_NAME = 'localhost'
 PORT_NUMBER = int(os.environ.get('ZIPTASTIC_PORT', 80))
 
@@ -45,7 +47,7 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         if the_zip:
             # Query database with the ZIP and pull the city, state, country
-            r = redis.StrictRedis(host='localhost', port=6379, db=0)
+            r = redis.StrictRedis(host='localhost', port=8322, db=0)
 
             if old_db:
                 location = r.hgetall(the_zip)
@@ -58,6 +60,8 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_header("Content-type", "application/json")
                 s.end_headers()
                 s.wfile.write(json.dumps(location))
+                mp = Mixpanel("260efdc73003178a9c05ffb14f426483")
+                mp.track("zip-server", "API Request")
             else:
                 s.send_response(404)
                 s.send_header("Access-Control-Allow-Origin", "*")
