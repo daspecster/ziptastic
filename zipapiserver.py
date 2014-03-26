@@ -4,6 +4,7 @@ import urlparse
 import json
 import redis
 import os
+import time
 
 from mixpanel import Mixpanel
 
@@ -12,6 +13,11 @@ PORT_NUMBER = int(os.environ.get('ZIPTASTIC_PORT', 80))
 
 class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     def do_GET(s):
+        # Hacky time analytics
+        start_time = time.time()
+
+        mp = Mixpanel("260efdc73003178a9c05ffb14f426483")
+        
         # Get the zip from the data
         qs = {}
         path = s.path
@@ -60,8 +66,6 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 s.send_header("Content-type", "application/json")
                 s.end_headers()
                 s.wfile.write(json.dumps(location))
-                mp = Mixpanel("260efdc73003178a9c05ffb14f426483")
-                mp.track("zip-server", "API Request")
             else:
                 s.send_response(404)
                 s.send_header("Access-Control-Allow-Origin", "*")
@@ -74,6 +78,10 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             s.send_header("Content-type", "application/json")
             s.end_headers()
             s.wfile.write("{}")
+
+        end_time = time.time()
+        total_time = end_time-start_time
+        mp.track('Ziptastic', 'API Request', {'request-time': total_time })
 
     def do_OPTIONS(s):
         s.send_response(200)
