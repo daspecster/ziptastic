@@ -10,7 +10,7 @@ class ZipAPIImport():
         csv.field_size_limit(sys.maxsize)
 
         # connect to db
-        r = redis.StrictRedis(host='localhost', port=6379, db=0)
+        r = redis.StrictRedis(host='localhost', port=8322, db=0)
 
         with open(filename, 'rb') as txtdb:
             parseddb = csv.reader(txtdb, delimiter='\t')
@@ -38,9 +38,10 @@ class ZipAPIImport():
                     'county': county,
                     'timezone': tz
                     }
-
+                print data
                 data_str = json.dumps(data)
-                 
+                print data_str
+
                 r.rpush(
                     country + ":" + postal_code,
                     data_str
