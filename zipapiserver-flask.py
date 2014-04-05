@@ -1,5 +1,4 @@
 import json
-import redis
 import os
 import time
 
@@ -8,6 +7,12 @@ from functools import update_wrapper
 
 from flask import Flask, Response, jsonify, abort, make_response, request, current_app, g
 from mixpanel import Mixpanel
+
+from redis import Redis
+redis = Redis()
+redis2 = Redis(host='localhost', port=8322, db=0)
+
+
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = int(os.environ.get('ZIPTASTIC_PORT', 80))
@@ -41,10 +46,9 @@ class RateLimit(object):
         self.limit = limit
         self.per = per
         self.send_x_headers = send_x_headers
-        tr = redis.StrictRedis(host='localhost', port=6379, db=0)
-        p = tr.pipeline()
+        p = redis.pipeline()
         p.incr(self.key)
-        p.expireat(self.key, self.returneset + self.expiration_window)
+        p.expireat(self.key, self.reset + self.expiration_window)
         self.current = min(p.execute()[0], limit)
 
     remaining = property(lambda x: x.limit - x.current)
@@ -63,13 +67,15 @@ def ratelimit(limit, per=300, send_x_headers=True,
     def decorator(f):
         def rate_limited(*args, **kwargs):
             key = 'rate-limit/%s/%s/' % (key_func(), scope_func())
-            rlimit = ratelimit(key, limit, per, send_x_headers)
+            rlimit = RateLimit(key, limit, per, send_x_headers)
             g._view_rate_limit = rlimit
             if over_limit is not None and rlimit.over_limit:
                 return over_limit(rlimit)
             return f(*args, **kwargs)
         return update_wrapper(rate_limited, f)
     return decorator
+
+
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
@@ -115,7 +121,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 
 @app.route("/3/<country>/<postal_code>", methods=['GET', 'HEAD', 'OPTIONS'])
-@ratelimit(limit=300, per=60 * 15)
+@ratelimit(limit=300, per=3600 * 24)
 @crossdomain(origin='*')
 def ziptastic(country, postal_code):
     # Hacky time analytics
@@ -132,10 +138,10 @@ def ziptastic(country, postal_code):
     postal_code = postal_code.split('-')[0]
 
     if postal_code:
-        # Query database with the ZIP and pull the city, state, country
-        r = redis.StrictRedis(host='localhost', port=8322, db=0)
+        # Query datetimeabase with the ZIP and pull the city, state, country
+        # redis = redis.StrictRedis(host='localhost', port=8322, db=0)
 
-        location = r.lrange("{0}:{1}".format(country, postal_code), 0, -1)
+        location = redis2.lrange("{0}:{1}".format(country, postal_code), 0, -1)
         print location
         if len(location) > 0:
             resp = Response(json.dumps(location).decode('string_escape'),  mimetype='application/json')

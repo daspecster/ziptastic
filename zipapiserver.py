@@ -1,13 +1,18 @@
 import json
-import redis
 import os
 import time
 
 from datetime import timedelta
 from functools import update_wrapper
 
-from flask import Flask, Response, jsonify, abort, make_response, request, current_app
+from flask import Flask, Response, jsonify, abort, make_response, request, current_app, g
 from mixpanel import Mixpanel
+
+from redis import Redis
+redis = Redis()
+redis2 = Redis(host='localhost', port=8322, db=0)
+
+
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = int(os.environ.get('ZIPTASTIC_PORT', 80))
@@ -19,6 +24,58 @@ def not_found(error):
     resp = jsonify({})
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
+
+
+@app.after_request
+def inject_x_rate_headers(response):
+    limit = get_view_rate_limit()
+    if limit and limit.send_x_headers:
+        h = response.headers
+        h.add('X-RateLimit-Remaining', str(limit.remaining))
+        h.add('X-RateLimit-Limit', str(limit.limit))
+        h.add('X-RateLimit-Reset', str(limit.reset))
+    return response
+
+
+class RateLimit(object):
+    expiration_window = 10
+
+    def __init__(self, key_prefix, limit, per, send_x_headers):
+        self.reset = (int(time.time()) // per) * per + per
+        self.key = key_prefix + str(self.reset)
+        self.limit = limit
+        self.per = per
+        self.send_x_headers = send_x_headers
+        p = redis.pipeline()
+        p.incr(self.key)
+        p.expireat(self.key, self.reset + self.expiration_window)
+        self.current = min(p.execute()[0], limit)
+
+    remaining = property(lambda x: x.limit - x.current)
+    over_limit = property(lambda x: x.current >= x.limit)
+
+def get_view_rate_limit():
+    return getattr(g, '_view_rate_limit', None)
+
+def on_over_limit(limit):
+    return 'You hit the rate limit', 400
+
+def ratelimit(limit, per=300, send_x_headers=True,
+              over_limit=on_over_limit,
+              scope_func=lambda: request.remote_addr,
+              key_func=lambda: request.endpoint):
+    def decorator(f):
+        def rate_limited(*args, **kwargs):
+            key = 'rate-limit/%s/%s/' % (key_func(), scope_func())
+            rlimit = RateLimit(key, limit, per, send_x_headers)
+            g._view_rate_limit = rlimit
+            if over_limit is not None and rlimit.over_limit:
+                return over_limit(rlimit)
+            return f(*args, **kwargs)
+        return update_wrapper(rate_limited, f)
+    return decorator
+
+
 
 def crossdomain(origin=None, methods=None, headers=None,
                 max_age=21600, attach_to_all=True,
@@ -64,6 +121,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 
 @app.route("/3/<country>/<postal_code>", methods=['GET', 'HEAD', 'OPTIONS'])
+@ratelimit(limit=300, per=3600 * 24)
 @crossdomain(origin='*')
 def ziptastic(country, postal_code):
     # Hacky time analytics
@@ -80,10 +138,10 @@ def ziptastic(country, postal_code):
     postal_code = postal_code.split('-')[0]
 
     if postal_code:
-        # Query database with the ZIP and pull the city, state, country
-        r = redis.StrictRedis(host='localhost', port=8322, db=0)
+        # Query datetimeabase with the ZIP and pull the city, state, country
+        # redis = redis.StrictRedis(host='localhost', port=8322, db=0)
 
-        location = r.lrange("{0}:{1}".format(country, postal_code), 0, -1)
+        location = redis2.lrange("{0}:{1}".format(country, postal_code), 0, -1)
         print location
         if len(location) > 0:
             resp = Response(json.dumps(location).decode('string_escape'),  mimetype='application/json')
