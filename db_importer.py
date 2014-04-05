@@ -38,9 +38,8 @@ class ZipAPIImport():
                     'county': county,
                     'timezone': tz
                     }
-                print data
+
                 data_str = json.dumps(data)
-                print data_str
 
                 r.rpush(
                     country + ":" + postal_code,
