@@ -120,7 +120,7 @@ def crossdomain(origin=None, methods=None, headers=None,
 
 
 
-@app.route("/3/<country>/<postal_code>", methods=['GET', 'HEAD', 'OPTIONS'])
+@app.route("/v3/<country>/<postal_code>", methods=['GET', 'HEAD', 'OPTIONS'])
 @ratelimit(limit=300, per=3600 * 24)
 @crossdomain(origin='*')
 def ziptastic(country, postal_code):
