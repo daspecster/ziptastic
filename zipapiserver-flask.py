@@ -2,11 +2,13 @@ import json
 import os
 import time
 
+
 from datetime import timedelta
 from functools import update_wrapper
 
 from flask import Flask, Response, jsonify, abort, make_response, request, current_app, g
 from mixpanel import Mixpanel
+from config import MIXPANEL_ID
 
 from redis import Redis
 redis = Redis()
@@ -127,7 +129,7 @@ def ziptastic(country, postal_code):
     # Hacky time analytics
     start_time = time.time()
 
-    mp = Mixpanel("260efdc73003178a9c05ffb14f426483")
+    mp = Mixpanel(MIXPANEL_ID)
 
     if country is None:
         tcountry = 'US'
@@ -142,7 +144,7 @@ def ziptastic(country, postal_code):
         # redis = redis.StrictRedis(host='localhost', port=8322, db=0)
 
         location = redis2.lrange("{0}:{1}".format(country, postal_code), 0, -1)
-        print location
+        # print location
         if len(location) > 0:
             resp = Response(json.dumps(location).decode('string_escape'),  mimetype='application/json')
             resp.headers['Access-Control-Allow-Origin'] = '*'
