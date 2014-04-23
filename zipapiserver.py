@@ -81,7 +81,8 @@ class ZipAPIServerHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         end_time = time.time()
         total_time = end_time-start_time
-        mp.track('Ziptastic', 'API Request', {'request-time': total_time })
+        if s.client_address[0] != '127.0.0.1':
+            mp.track('Ziptastic', 'API Request', {'request-time': total_time, 'remote-ip': s.client_address[0] })
 
     def do_OPTIONS(s):
         s.send_response(200)
