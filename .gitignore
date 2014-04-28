@@ -5,3 +5,4 @@ timeZones.txt
 ziptastic.rdb
 data/*
 stdout
+nohup.out
