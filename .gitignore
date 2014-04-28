@@ -1,1 +1,7 @@
 *.pyc
+*.rdb
+allCountriesData.txt
+timeZones.txt
+ziptastic.rdb
+data/*
+stdout
