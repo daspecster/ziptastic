@@ -19,12 +19,12 @@ Usage
 This is the new updated version and requires that you pass in the country code as well.
 
 Example:
-http://zip.elevenbasetwo.com/v2/US/48867
+http://zip.getziptastic.com/v2/US/48867
 
 ### v1 ###
 This version only supports US postal codes and can be accessed like this...
 
 Example:
-http://zip.elevenbasetwo.com/48867
+http://zip.getziptastic.com/48867
 and
-http://zip.elevenbasetwo.com/?zip=48867
+http://zip.getziptastic.com/?zip=48867
