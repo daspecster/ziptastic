@@ -1,6 +1,10 @@
 Ziptastic
 =========
 
+## We have moved to [GetZiptastic.com](https://www.getziptastic.com)!
+
+-------------
+
 Important
 ---------
 We recommend using GeoIP to determine the country code of your visitor as a suggestion when they are filling out your form.
